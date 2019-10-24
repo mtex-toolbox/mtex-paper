@@ -10,7 +10,7 @@
 % Import the quartz data and consider only the largest grain
 
 % load the ebsd data
-ebsd = loadEBSD('Quartz-175B_05.ctf','convertEuler2SpatialReferenceFrame');
+ebsd = EBSD.load('Quartz-175B_05.ctf','convertEuler2SpatialReferenceFrame');
 
 % restrict to the quartz phase
 ebsd = ebsd('Quartz');
@@ -33,13 +33,13 @@ plotx2east
 % Euler RGB color map of the quartz grain
 
 % define the orientation to color map
-oM = BungeRGBOrientationMapping(ori);
+key =BungeColorKey(ori)
 
 % rotate the data to make the color jump better visible
 ebsd_rot = rotate(ebsd,rotation('Euler',90*degree,180*degree,0),'keepXY');
 
 % plot the orientation map colorized by Bunge Euler angles
-plot(ebsd,oM.orientation2color(ebsd_rot.orientations))
+plot(ebsd,key.orientation2color(ebsd_rot.orientations))
 %saveFigure('../quartz/quartz_RGB.png')
 
 
@@ -56,7 +56,7 @@ ori2 = discreteSample(ebsd_rot.orientations,1000);
 [phi1,Phi,phi2] = project2EulerFR(ori2,'Bunge');
 
 % scatter plot phi1 - phi2 colorized by the RGB as the map from Fig. 1a
-scatter(phi1./degree, phi2./degree,10, oM.orientation2color(ori2))
+scatter(phi1./degree, phi2./degree,10, key.orientation2color(ori2))
 
 % make the plot nnice
 xlabel('$\varphi_1$','fontSize',20,'interpreter','LaTeX')
@@ -75,14 +75,14 @@ box on
 % Colorize the quartz grain according to the TSL ipf key
 
 % define the TSL IPF key
-oM = TSLOrientationMapping(ebsd);
+key = ipfTSLKey(ebsd);
 
 % set the reference direction
-oM.inversePoleFigureDirection = yvector;
+key.inversePoleFigureDirection = yvector;
 
 % plot the orientation map
 plotzIntoPlane
-plot(ebsd,oM.orientation2color(ori))
+plot(ebsd,key.orientation2color(ori))
 %saveFigure('../quartz/quartz_TSL.png')
 
 %% Figur 1d
@@ -90,7 +90,7 @@ plot(ebsd,oM.orientation2color(ori))
 
 % plot the key
 plotzOutOfPlane
-plot(oM,'noTitle','autoAlignText','Marker','none')
+plot(key,'noTitle','autoAlignText','Marker','none')
 
 % plot the orientations on top of the key
 hold on
@@ -101,12 +101,12 @@ hold off
 
 %% Section 1.3
 
-csNames = {'-1','112/m','mmm','4/m','4/mmm','-3','-3m','6/m','6/mmm','m-3'}
+csNames = {'-1','112/m','mmm','4/m','4/mmm','-3','-3m','6/m','6/mmm','m-3'};
 
-cs = crystalSymmetry(csNames{end-1})
-oM = TSLOrientationMapping(cs)
+cs = crystalSymmetry(csNames{end-1});
+key = ipfTSLKey(cs);
 
-plot(oM,'3d')
+plot(key,'3d')
 %plot(oM,'upper','complete','noLabel','noTitle')
 %hold on
 %plot(cs)

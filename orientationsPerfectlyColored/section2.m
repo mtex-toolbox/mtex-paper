@@ -15,11 +15,11 @@
 % being the polar angle.
 
 cs = crystalSymmetry('1')
-oM = ipdfHSVOrientationMapping(cs); 
+ipfKey = ipfHSVKey(cs); 
 %oM.colorPostRotation = rotation('Euler',-pi/2,pi/2,0,'ZYZ');
-oM.grayValue = 0.2;
-oM.grayGradient = 0.2;
-plot(oM,'noTitle','grid','grid_res',30*degree)
+ipfKey.grayValue = 0.2;
+ipfKey.grayGradient = 0.2;
+plot(ipfKey,'noTitle','grid','grid_res',30*degree)
 
 mtexFig = gcm;
 sP = getappdata(mtexFig.children(1),'sphericalPlot');
@@ -38,8 +38,8 @@ set(sP.grid,'color',[0 0 0]);
 cs = crystalSymmetry('mmm');
 sR = cs.fundamentalSector;
 
-oM = ipdfHSVOrientationMapping(cs)
-plot(oM,'noTitle','autoAlignText','Marker','none')
+ipfKey = ipfHSVKey(cs)
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 
 plotzOutOfPlane
 v = plotS2Grid(sR,'resolution',0.5*degree);
@@ -47,9 +47,9 @@ v = plotS2Grid(sR,'resolution',0.5*degree);
 [r,rho] = sR.polarCoordinates(v,sR.center);
 
 hold on
-contour(v,r,'contours',7)
+contour(v,r,'contours',7,'lineColor','dimgray')
 hold on
-contour(v,rho,'contours',10)
+contour(v,rho,'contours',10,'lineColor','dimgray')
 hold on
 plot(sR,'linewidth',2)
 
@@ -65,18 +65,18 @@ hold off
 cs = crystalSymmetry('m-3m');
 sR = cs.fundamentalSector;
 
-oM = ipdfHSVOrientationMapping(cs)
+ipfKey = ipfHSVKey(cs)
 
-plot(oM,'noTitle','autoAlignText','Marker','none')
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 
 v = plotS2Grid(sR,'resolution',0.5*degree);
 
 [r,rho] = sR.polarCoordinates(v,sR.center);
 
 hold on
-contour(v,r,'contours',7)
+contour(v,r,'contours',7,'lineColor','dimgray')
 hold on
-contour(v,rho,'contours',10)
+contour(v,rho,'contours',10,'lineColor','dimgray')
 hold on
 plot(sR,'linewidth',2)
 
@@ -91,18 +91,18 @@ hold off
 cs = crystalSymmetry('31m');
 sR = cs.fundamentalSector;
 
-oM = ipdfHSVOrientationMapping(cs)
+ipfKey = ipfHSVKey(cs)
 
-plot(oM,'noTitle','autoAlignText','Marker','none')
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 
 v = plotS2Grid(sR,'resolution',0.5*degree);
 
 [r,rho] = sR.polarCoordinates(v,sR.center);
 
 hold on
-contour(v,r,'contours',7)
+contour(v,r,'contours',7,'lineColor','dimgray','add2all')
 hold on
-contour(v,rho,'contours',13)
+contour(v,rho,'contours',13,'lineColor','dimgray','add2all')
 hold on
 plot(sR,'linewidth',2)
 
@@ -116,19 +116,19 @@ hold off
 
 % define a ipf key for m-3
 cs = crystalSymmetry('m-3')
-oM = ipdfHSVOrientationMapping(cs);
+ipfKey = ipfHSVKey(cs);
 
 % without additional reflections
-oM.refl = [];
+ipfKey.dirMap.refl = [];
 
 % and with respect to the true fundamental sector
-oM.sR = cs.fundamentalSector;
+ipfKey.dirMap.sR = cs.fundamentalSector;
 
 % and with respect to the true center
-oM.whiteCenter = oM.sR.center;
+ipfKey.whiteCenter = ipfKey.dirMap.sR.center;
 
 % plot the ipf key
-plot(oM,'complete','upper','noLabel','resolution',0.25*degree)
+plot(ipfKey,'complete','upper','noLabel','resolution',0.25*degree)
 hold on
 plot(cs)
 hold on
@@ -143,8 +143,8 @@ hold off
 
 % use a higher symmetric key
 cs2 = crystalSymmetry('m-3m')
-oM = ipdfHSVOrientationMapping(cs2);
-plot(oM,'complete','upper','noLabel','resolution',1*degree)
+ipfKey = ipfHSVKey(cs2);
+plot(ipfKey,'complete','upper','noLabel','resolution',1*degree)
 hold on
 plot(cs)
 hold on
@@ -157,8 +157,8 @@ hold off
 % Figure 5c
 
 % the correct key with additional reflections
-oM = ipdfHSVOrientationMapping(cs);
-plot(oM,'complete','upper','noLabel','resolution',1*degree)
+ipfKey = ipfHSVKey(cs);
+plot(ipfKey,'complete','upper','noLabel','resolution',1*degree)
 hold on
 plot(cs)
 hold on
@@ -172,9 +172,9 @@ hold off
 % Figure 6a - ipf key for -1 with color discontinuities
 
 cs = crystalSymmetry('-1')
-oM = ipdfHSVOrientationMapping(cs)
+ipfKey = ipfHSVKey(cs);
 
-plot(oM,'complete','noLabel','notitle')
+plot(ipfKey,'complete','noLabel','notitle')
 
 % saveFigure('../full/-1a.png')
 
@@ -183,10 +183,10 @@ plot(oM,'complete','noLabel','notitle')
 % Figure 6b - ambiguis ipf key for -1 without color discontinuities
 
 cs = crystalSymmetry('-1')
-oM = ipdfHSVOrientationMapping(cs)
-oM.maxAngle = pi/2
-oM.maxAngle = pi/2
-plot(oM,'complete','noLabel','notitle')
+ipfKey = ipfHSVKey(cs);
+ipfKey.maxAngle = pi/2
+ipfKey.maxAngle = pi/2
+plot(ipfKey,'complete','noLabel','notitle')
 
 % saveFigure('../full/-1b.png')
 
@@ -195,9 +195,9 @@ plot(oM,'complete','noLabel','notitle')
 % Figure 7a - ipf key for -3 with color discontinuities
 
 cs = crystalSymmetry('-3','a||x')
-oM = ipdfHSVOrientationMapping(cs)
+ipfKey = ipfHSVKey(cs);
 
-plot(oM,'complete','nolabel','notitle')
+plot(ipfKey,'complete','nolabel','notitle')
 hold on
 plot(cs)
 hold off
@@ -209,9 +209,9 @@ hold off
 % Figure 7b - ipf key for -4 with color discontinuities
 
 cs = crystalSymmetry('-4')
-oM = ipdfHSVOrientationMapping(cs)
+ipfKey = ipfHSVKey(cs);
 
-plot(oM,'complete','noLabel','notitle')
+plot(ipfKey,'complete','noLabel','notitle')
 hold on
 plot(cs)
 hold off

@@ -20,31 +20,31 @@ imagesc(rgb), axis off
 %% Appendix A.2
 
 cs = crystalSymmetry('1');
-oM = ipdfHSVOrientationMapping(cs);
-oM.colorPostRotation = rotation('Euler',-pi/2,pi/2,0,'ZYZ');
-oM.grayGradient = 1;
-oM.grayValue = 0;
+ipfKey = ipfHSVKey(cs);
+ipfKey.colorPostRotation = rotation('Euler',-pi/2,pi/2,0,'ZYZ');
+ipfKey.grayGradient = 1;
+ipfKey.grayValue = 0;
 
-plot(oM,'noLabel');
+plot(ipfKey,'noLabel');
 set(gcf,'position',[200 200 230 450])
 % saveFigure('../pic/1default.png')
 
 %%
 
-oM.grayGradient = [0.25 0.5];
-oM.grayValue = 0;
+ipfKey.grayGradient = [0.25 0.5];
+ipfKey.grayValue = 0;
 
-plot(oM,'noLabel');
+plot(ipfKey,'noLabel');
 set(gcf,'position',[200 200 230 450])
 
 % saveFigure('../pic/1_02.png')
 
 %%
 
-oM.grayGradient = [0.25 0.5];
-oM.grayValue = [0.2,0.5];
+ipfKey.grayGradient = [0.25 0.5];
+ipfKey.grayValue = [0.2,0.5];
 
-plot(oM,'noLabel');
+plot(ipfKey,'noLabel');
 set(gcf,'position',[200 200 230 450])
 
 % saveFigure('../pic/1_05_02.png')
@@ -58,9 +58,9 @@ for id = 1:45
 
   cs = crystalSymmetry('pointid',id);
   disp(cs.pointGroup)
-  oM = ipdfHSVOrientationMapping(cs);
+  ipfKey = ipfHSVKey(cs);
 
-  plot(oM,'noTitle','noLabel','innerplotSpacing',5)
+  plot(ipfKey,'noTitle','noLabel','innerplotSpacing',5)
   hold on
   plot(cs)
   %hold on

@@ -11,7 +11,7 @@
 % data import
 plotx2east
 plotzOutOfPlane
-ebsd = loadEBSD('K-SX.ctf','convertspatial2EulerReferenceFrame')
+ebsd = EBSD.load('K-SX.ctf','convertspatial2EulerReferenceFrame')
 ori = ebsd.orientations;
 
 grains = calcGrains(ebsd,'unitCell');
@@ -19,12 +19,12 @@ grains = calcGrains(ebsd,'unitCell');
 %%
 % Figure 10a
 
-oM = ipdfHSVOrientationMapping(ebsd.CS.properGroup);
-oM.inversePoleFigureDirection = xvector;
-oM.grayGradient = 0.25;
-oM.grayValue = 0.2;
+ipfKey = ipfHSVKey(ebsd.CS.properGroup);
+ipfKey.inversePoleFigureDirection = xvector;
+ipfKey.grayGradient = 0.25;
+ipfKey.grayValue = 0.2;
 
-plot(ebsd,oM.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
+plot(ebsd,ipfKey.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
 
 id = [2,8,5,11];
 ori = grains.meanOrientation;
@@ -43,8 +43,8 @@ hold off
 %%
 % Figure 10b
 
-oM.inversePoleFigureDirection = yvector;
-plot(ebsd,oM.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
+ipfKey.inversePoleFigureDirection = yvector;
+plot(ebsd,ipfKey.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
 
 hold on
 for i = 1:4
@@ -59,8 +59,8 @@ hold off
 %%
 % Figure 10c
 
-oM.inversePoleFigureDirection = zvector;
-plot(ebsd,oM.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
+ipfKey.inversePoleFigureDirection = zvector;
+plot(ebsd,ipfKey.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
 
 hold on
 for i = 1:4
@@ -75,9 +75,9 @@ hold off
 %%
 % Figure 10d
 
-oM.inversePoleFigureDirection = zvector;
+ipfKey.inversePoleFigureDirection = zvector;
 
-plotPDF(ori,oM.orientation2color(ori),Miller(1,0,0,ebsd.CS),...
+plotPDF(ori,ipfKey.orientation2color(ori),Miller(1,0,0,ebsd.CS),...
   'projection','eangle','noTitle','MarkerEdgeColor',0.6*[1 1 1],...
   'MarkerSize',7,'grid','on')
 
@@ -103,9 +103,9 @@ drawNow(gcm,'figSize','large')
 %%
 % Figure 10e
 
-ori.CS = oM.CS1;
-oM.inversePoleFigureDirection = zvector
-plot(oM,'noTitle','autoAlignText','Marker','none')
+ori.CS = ipfKey.CS1;
+ipfKey.inversePoleFigureDirection = zvector;
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 hold on
 plot(ori,'markerFaceColor','k','MarkerEdgeColor','k','marker','o','MarkerSize',7)
 hold off
@@ -119,7 +119,7 @@ hold off
 % data peperation
 
 % load the ebsd data
-ebsd = loadEBSD('Quartz-175B_05.ctf','convertEuler2SpatialReferenceFrame');
+ebsd = EBSD.load('Quartz-175B_05.ctf','convertEuler2SpatialReferenceFrame');
 
 % restrict to the quartz phase
 ebsd = ebsd('Quartz');
@@ -136,17 +136,17 @@ grains = calcGrains(ebsd);
 %%
 % Figure 11a
 
-oM = ipdfHSVOrientationMapping(ebsd.CS);
-oM.grayValue = [0.2,0.5];
-oM.grayGradient = 0.5
+ipfKey = ipfHSVKey(ebsd.CS);
+ipfKey.grayValue = [0.2,0.5];
+ipfKey.grayGradient = 0.5;
 
 plotzOutOfPlane
-plot(oM,'noTitle','autoAlignText','Marker','none')
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 
 ori = grains.meanOrientation;
 
 plotzOutOfPlane
-plot(oM,'noTitle','autoAlignText','Marker','none')
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 
 args = {'MarkerSize',10,'symmetrised'};
 
@@ -169,9 +169,9 @@ hold off
 %%
 
 % Figure 11c
-plot(oM,'noTitle','complete','upper')
+plot(ipfKey,'noTitle','complete','upper')
 hold on
-plot(oM.CS1)
+plot(ipfKey.CS1)
 hold off
 
 %saveFigure('../quartz/-3m1.png')
@@ -179,15 +179,15 @@ hold off
 %%
 % Figure 11b
 
-oM = ipdfHSVOrientationMapping(ebsd.CS.properGroup);
-oM.grayValue = [0.2,0.5];
-oM.grayGradient = 0.25;
+ipfKey = ipfHSVKey(ebsd.CS.properGroup);
+ipfKey.grayValue = [0.2,0.5];
+ipfKey.grayGradient = 0.25;
 
 ori = grains.meanOrientation;
 ori.CS = ori.CS.properGroup;
 
 plotzOutOfPlane
-plot(oM,'noTitle','autoAlignText','Marker','none')
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 
 args = {'MarkerSize',10,'symmetrised'};
 
@@ -210,9 +210,9 @@ hold off
 %%
 
 % Figure 11d
-plot(oM,'noTitle','complete','upper')
+plot(ipfKey,'noTitle','complete','upper')
 hold on
-plot(oM.CS1)
+plot(ipfKey.CS1)
 hold off
 
 %saveFigure('../quartz/321.png')
@@ -225,12 +225,12 @@ r = xvector;
 % r = yvector + zvector;
 % r = xvector + yvector + zvector;
 
-oM = ipdfHSVOrientationMapping(ori.CS.Laue);
-oM.inversePoleFigureDirection = r;
-oM.grayValue = [0.2,0.5];
-oM.grayGradient = 0.5;
+ipfKey = ipfHSVKey(ori.CS.Laue);
+ipfKey.inversePoleFigureDirection = r;
+ipfKey.grayValue = [0.2,0.5];
+ipfKey.grayGradient = 0.5;
 plotzIntoPlane
-plot(ebsd,oM.orientation2color(ebsd.orientations))
+plot(ebsd,ipfKey.orientation2color(ebsd.orientations))
 hold on
 plot(grains(1).boundary,'linewidth',1.5)
 hold off
@@ -248,10 +248,10 @@ r = xvector;
 % r = yvector + zvector;
 % r = xvector + yvector + zvector;
 
-oM = ipdfHSVOrientationMapping(ori.CS.properGroup);
-oM.inversePoleFigureDirection = r;
+ipfKey = ipfHSVKey(ori.CS.properGroup);
+ipfKey.inversePoleFigureDirection = r;
 plotzIntoPlane
-plot(ebsd,oM.orientation2color(ebsd.orientations))
+plot(ebsd,ipfKey.orientation2color(ebsd.orientations))
 hold on
 plot(grains(1).boundary,'linewidth',1.5)
 hold off
@@ -270,7 +270,7 @@ setMTEXpref('xAxisDirection','west');
 setMTEXpref('zAxisDirection','outOfPlane');
 
 CS = crystalSymmetry('-43m', [5.4505 5.4505 5.4505], 'mineral', 'GaP');
-ebsd = loadEBSD_generic('GaP320_XCDS.BEST.MTXT','CS',CS,...
+ebsd = EBSD.load('GaP320_XCDS.BEST.MTXT','CS',CS,...
   'ColumnNames', { 'phi1' 'Phi' 'phi2' 'phase' 'x' 'y' 'xc' 'int' 'kik'})
 
 grains = calcGrains(ebsd,'angle',5*degree);
@@ -283,13 +283,13 @@ grainIds = grains.findByLocation([ebsd(ids).x,ebsd(ids).y]);
 % Figure 13a
 
 % consider rotational part of the Laue group of 
-oM = ipdfHSVOrientationMapping(CS.properGroup);
-oM.inversePoleFigureDirection = vector3d.X;
-oM.grayGradient = 0.25;
-oM.grayValue = [0.2 0.5];
+ipfKey = ipfHSVKey(CS.properGroup);
+ipfKey.inversePoleFigureDirection = vector3d.X;
+ipfKey.grayGradient = 0.25;
+ipfKey.grayValue = [0.2 0.5];
 
 figure(1)
-plot(ebsd,oM.orientation2color(ebsd.orientations),'micronBar',false)
+plot(ebsd,ipfKey.orientation2color(ebsd.orientations),'micronBar',false)
 hold on
 plot(grains.boundary)
 hold off
@@ -306,7 +306,7 @@ text(c(:,1),c(:,2),{'A','B','C'},'fontSize',10,'backgroundcolor','w')
 figure(2)
 cs = crystalSymmetry('23', [5.4505 5.4505 5.4505], 'mineral', 'GaP');
 sR = cs.fundamentalSector;
-plot(oM,sR)
+plot(ipfKey,sR)
 hold on
 ori = orientation(grains(grainIds).meanOrientation,CS.properSubGroup);
 plot(ori([1,3]) \ xvector,'symmetrised','label',{'A','C'},...
@@ -321,13 +321,13 @@ hold off
 % Figure 13b
 
 % consider rotational part of the point group
-oM = ipdfHSVOrientationMapping(CS.properSubGroup);
-oM.inversePoleFigureDirection = vector3d.X;
-oM.grayGradient = 0.25;
-oM.grayValue = [0.2 0.5];
+ipfKey = ipfHSVKey(CS.properSubGroup);
+ipfKey.inversePoleFigureDirection = vector3d.X;
+ipfKey.grayGradient = 0.25;
+ipfKey.grayValue = [0.2 0.5];
 
 figure(3)
-plot(ebsd,oM.orientation2color(ebsd.orientations),'micronBar',false)
+plot(ebsd,ipfKey.orientation2color(ebsd.orientations),'micronBar',false)
 hold on
 plot(grains.boundary)
 hold off
@@ -343,7 +343,7 @@ text(c(:,1),c(:,2),{'A','B','C'},'backgroundcolor','w')
 
 % this is the colored fundamental sector
 figure(4)
-plot(oM)
+plot(ipfKey)
 hold on
 ori = orientation(grains(grainIds).meanOrientation,CS.properSubGroup);
 plot(ori([1,3]) \ xvector,'symmetrised','label',{'A','C'},...

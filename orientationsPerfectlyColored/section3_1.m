@@ -9,7 +9,7 @@
 % import ideal Kurdjumov-Sachs misorientations
 
 plotx2east
-ebsd = loadEBSD('K-SX.ctf','convertspatial2EulerReferenceFrame')
+ebsd = EBSD.load('K-SX.ctf','convertspatial2EulerReferenceFrame')
 ori = ebsd.orientations;
 
 grains = calcGrains(ebsd,'unitCell');
@@ -23,14 +23,14 @@ grains = calcGrains(ebsd,'unitCell');
 % different reference directions - first with respect to X
 
 
-oM = ipdfHSVOrientationMapping(ebsd.CS);
+ipfKey = ipfHSVKey(ebsd.CS);
 
 % here the reference direction is set
-oM.inversePoleFigureDirection = vector3d(1,0,0);
-oM.grayGradient = 0.25;
-oM.grayValue = 0.2;
+ipfKey.inversePoleFigureDirection = vector3d(1,0,0);
+ipfKey.grayGradient = 0.25;
+ipfKey.grayValue = 0.2;
 
-plot(ebsd,oM.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
+plot(ebsd,ipfKey.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
 
 id = [2,8,5,11];
 ori = grains.meanOrientation;
@@ -53,8 +53,8 @@ hold off
 % Figure 8b
 % next colorize the orientations with respect to Y
 
-oM.inversePoleFigureDirection = yvector;
-plot(ebsd,oM.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
+ipfKey.inversePoleFigureDirection = yvector;
+plot(ebsd,ipfKey.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
 
 hold on
 %plot(grains(id).boundary,'linecolor','b','linewidth',5)
@@ -72,8 +72,8 @@ hold off
 % Figure 8c
 % and finally with respect to z
 
-oM.inversePoleFigureDirection = zvector;
-plot(ebsd,oM.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
+ipfKey.inversePoleFigureDirection = zvector;
+plot(ebsd,ipfKey.orientation2color(ori),'EdgeColor','k','micronbar',false,'linewidth',2)
 
 hold on
 %plot(grains(id).boundary,'linecolor','b','linewidth',5)
@@ -93,9 +93,9 @@ hold off
 %
 % plot the colorized orientations into a pole figure
 
-oM.inversePoleFigureDirection = yvector;
+ipfKey.inversePoleFigureDirection = yvector;
 
-plotPDF(ori,oM.orientation2color(ori),Miller(1,0,0,ebsd.CS),...
+plotPDF(ori,ipfKey.orientation2color(ori),Miller(1,0,0,ebsd.CS),...
   'projection','eangle','noTitle','MarkerEdgeColor',0.6*[1 1 1],...
   'MarkerSize',7,'grid','on')
 
@@ -124,9 +124,9 @@ drawNow(gcm,'figSize','large')
 % mark the orientations in the IPF-Z key
 
 
-ori.CS = oM.CS1;
-oM.inversePoleFigureDirection = zvector
-plot(oM,'noTitle','autoAlignText','Marker','none')
+ori.CS = ipfKey.CS1;
+ipfKey.inversePoleFigureDirection = zvector;
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 hold on
 plot(ori,'markerFaceColor','k','MarkerEdgeColor','k','marker','o','MarkerSize',7)
 hold off
@@ -141,16 +141,16 @@ hold off
 ori_rot = rotation('Euler',25*degree,15*degree,55*degree) * ori;
 
 % change to xvector, yvector, zvector to generate a, b, c
-oM.inversePoleFigureDirection = xvector;
+ipfKey.inversePoleFigureDirection = xvector;
 
-plot(ebsd,oM.orientation2color(ori_rot),'EdgeColor','k','micronbar',false,'linewidth',2)
+plot(ebsd,ipfKey.orientation2color(ori_rot),'EdgeColor','k','micronbar',false,'linewidth',2)
 
 % saveFigure('../pic/K-SX-ROT-IPFX.png')
 
 %%
 % Figure 9d
 
-plotPDF(ori_rot,oM.orientation2color(ori_rot),Miller(1,0,0,ebsd.CS),...
+plotPDF(ori_rot,ipfKey.orientation2color(ori_rot),Miller(1,0,0,ebsd.CS),...
   'projection','eangle','noTitle','grid','on',...
   'MarkerEdgeColor',0.6*[1 1 1],'MarkerSize',7)
 
@@ -164,8 +164,8 @@ drawNow(gcm,'figSize','large')
 %%
 % Figure 9e
 
-oM.inversePoleFigureDirection = yvector;
-plot(oM,'noTitle','autoAlignText','Marker','none')
+ipfKey.inversePoleFigureDirection = yvector;
+plot(ipfKey,'noTitle','autoAlignText','Marker','none')
 hold on
 plot(ori_rot,'markerFaceColor','k','MarkerEdgeColor','k','marker','o','MarkerSize',7)
 hold off
