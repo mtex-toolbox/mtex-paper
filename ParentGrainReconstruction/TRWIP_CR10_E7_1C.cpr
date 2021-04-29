@@ -1,0 +1,99 @@
+[General]
+Version=5.0
+Date=8/11/2016
+Time=6:52:59 PM
+Duration=20:32:56
+PerCycle=0.02465872
+Description=TRWIP_CR10_E7_2
+Author=AZtec
+Notes=
+JobMode=RegularGrid
+SampleSymmetry=2
+Modified=True
+[Job]
+Coverage=97.4
+Magnification=1000
+kV=15.00
+TiltAngle=70.00
+TiltAxis=0.00
+Device=Beam
+GridDistX=0.0300
+GridDistY=0.0300
+xCells=2000
+yCells=1500
+[Acquisition Surface]
+Euler1=0.0
+Euler2=-90.0
+Euler3=4.0
+[Fields]
+Count=9
+Field1=3
+Field2=4
+Field3=5
+Field4=6
+Field5=7
+Field6=8
+Field7=10
+Field8=11
+Field9=12
+[Phases]
+Count=3
+[Phase1]
+StructureName=Iron fcc
+Reference=Z. Angew. Phys. [ZAPHAX], vol. 23, pages 245-249
+Enabled=True
+a=3.6599
+b=3.6599
+c=3.6599
+alpha=90.00
+beta=90.00
+gamma=90.00
+LaueGroup=11
+SpaceGroup=225
+ID1=
+ID2=
+[Maximum indices]
+Phase1=444
+Phase2=444
+Phase3=444
+[Phase2]
+StructureName=Iron bcc (old)
+Reference=J. Appl. Phys. [JAPIAU], vol. 42, pages 4290-95
+Enabled=True
+a=2.8660
+b=2.8660
+c=2.8660
+alpha=90.00
+beta=90.00
+gamma=90.00
+LaueGroup=11
+SpaceGroup=229
+ID1=
+ID2=
+[Phase3]
+StructureName=Epsilon_Martensite
+Reference=AM lattice parameters modified based on in-situ ND cyclic experiment data for 17%
+Enabled=True
+a=2.5450
+b=2.5450
+c=4.1400
+alpha=90.00
+beta=90.00
+gamma=120.00
+LaueGroup=9
+SpaceGroup=194
+ID1=
+ID2=
+[SEMFields]
+DOEuler1=0.448792839534878
+DOEuler2=90.7390057007661
+DOEuler3=2.33828345898508
+[StagePosition]
+XPos=0.213
+YPos=-9.19325
+ZPos=21.95956
+RPos=356.669189453125
+TPos=69.9978549917983
+ZValid=True
+[EDX Windows]
+Count=0
