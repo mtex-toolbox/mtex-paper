@@ -119,10 +119,10 @@ plot(job.parentGrains, job.parentGrains.meanOrientation, 'linewidth',2)
 for k = 1:3 
 
   % compute votes
-  job.calcGBVotes('p2c');
+  job.calcGBVotes('p2c','threshold',2.5*degree);
   
-  % compute parent orientations from votes with increasing threshold
-  job.calcParentFromVote('minFit',k*2.5*degree)
+  % compute parent orientations from votes
+  job.calcParentFromVote
 
 end
 
