@@ -2,9 +2,10 @@
 %
 %% Parent grain reconstruction from partially or fully transformed microstructures in MTEX
 %
-% by Frank Niessen, Tuomo Nyyssönen, Azdiar A. Gazder, Ralf Hielscher:
+% by Frank Niessen, Tuomo NyyssÃ¶nen, Azdiar A. Gazder, Ralf Hielscher:
 %
 % * to run the script at least MTEX 5.7 has to be installed
+% * some commands require installation of ORTools (> v.1.1)
 % 
 %% Section 4.1 - gamma to alpha in lath martensite
 % 
@@ -17,7 +18,7 @@ ebsd = mtexdata('martensite');
 ebsd('Iron bcc (old)').CS.mineral = 'AlphaP';
 ebsd('Iron fcc').CS.mineral = 'Gamma';
 
-% calculate grains with a 3° threshold
+% calculate grains with a 3Â° threshold
 [grains,ebsd.grainId] = calcGrains(ebsd('indexed'), 'angle', 3*degree);
 
 % remove EBSD data corresponding to one pixel grains
