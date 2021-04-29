@@ -2,7 +2,7 @@
 %
 %% Parent grain reconstruction from partially or fully transformed microstructures in MTEX
 %
-% by Frank Niessen, Tuomo Nyyssönen, Azdiar A. Gazder, Ralf Hielscher:
+% by Frank Niessen, Tuomo NyyssÃ¶nen, Azdiar A. Gazder, Ralf Hielscher:
 %
 % * to run the script at least MTEX 5.7 has to be installed
 % 
@@ -17,7 +17,7 @@ ebsd = mtexdata('martensite');
 ebsd('Iron bcc (old)').CS.mineral = 'AlphaP';
 ebsd('Iron fcc').CS.mineral = 'Gamma';
 
-% calculate grains with a 3° threshold
+% calculate grains with a 3Â° threshold
 [grains,ebsd.grainId] = calcGrains(ebsd('indexed'), 'angle', 3*degree);
 
 % remove EBSD data corresponding to one pixel grains
@@ -142,7 +142,7 @@ plot(job.parentGrains,job.parentGrains.meanOrientation,'linewidth',2)
 %% Figure 10 - parent EBSD map
 
 % compute the parent EBSD
-parentEBSD = ebsd.parentEBSD;
+parentEBSD = job.parentEBSD;
 
 % plot the reconstructed EBSD data
 plot(parentEBSD, parentEBSD.orientations);
