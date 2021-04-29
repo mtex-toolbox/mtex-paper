@@ -5,6 +5,7 @@
 % by Frank Niessen, Tuomo Nyyssönen, Azdiar A. Gazder, Ralf Hielscher:
 %
 % * to run the script at least MTEX 5.7 has to be installed
+% * some commands require installation of ORTools (> v.1.1)
 % 
 %% Section 4.1 - gamma to alpha in lath martensite
 % 
