@@ -4,4 +4,5 @@ MTEX scripts for the paper
 
 by Frank Niessen, Tuomo Nyyssönen, Azdiar A. Gazder, Ralf Hielscher:
 
-to run the scripts all data files has to be downloaded and at least MTEX 5.7 has to be installed
+To run the scripts at least MTEX 5.7 has to be installed. 
+For the script `section_4_3_gamma2epsilon2alpha` the data files `TRWIP_CR10_E7_1C.*` has to be downloaded.
