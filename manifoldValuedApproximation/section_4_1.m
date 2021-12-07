@@ -71,10 +71,7 @@ hold on
 plot(S2,f,'upper','linewidth',3)
 hold off
 
-% plot singularities
-%circle(rSing, 10*degree,'linecolor',0.5*[1 1 1],'linewidth',2)
-
- %saveFigure('../pic/ps1Data.pdf','crop')
+%saveFigure('../pic/ps1Data.pdf','crop')
 
 %% Fig. 1b - Harmonic Approximation 
 
@@ -98,12 +95,13 @@ r = plotS2Grid('upper');
 % the approximated polarization directions
 ft_r = f_tilde.eval(r);
 
-% visualize the error |f-I_Mf|
-%err_func = (1-dot(ps1Approx,ps1True.'))';
-err_func = (sqrt(2-2*dot(ft_r,f.').^2))';
-%err_func = acos(abs(dot(ps1Approx,ps1True.')));
+% the approximation in the embedding space
+f_tilde_rX = f_tilde.sF.eval(r).'; 
+f_tilde_rX = f_tilde_rX([1 2 4 2 3 5 4 5 6],:);
 
-%plot(r,err_func,'upper','linewidth',3)
+% visualize the error |f-I_Mf|
+err_func = (sqrt(2-2*dot(ft_r,f.').^2))';
+
 plot(r,err_func,'upper','linewidth',3,'contours',400)
 
 %setColorRange([1e-3,1],'linear')
@@ -111,15 +109,27 @@ mtexColorbar('fontSize',26)
 mtexColorMap white2black
 %mtexColorMap parula
 
-% % output of maximum error, RMSE
-% disp('The maximum of the approximation error on the fine grid is ')
-% disp( max(err_func) )
-% disp('RMSE of the approximation on the fine grid is ')
-% disp( (sum(err_func.^2)/length(ps1True))^(1/2))
+% saveFigure('../pic/ps1error8.pdf','crop')
+
+
+ %% Fig 1d - The error of the linear approximation
+
+% error without projection
+e_f = vecnorm(reshape(double(dyad(f(:),2)),9,[]) - f_tilde_rX);
+
+figure()
+plot(r,e_f)
+mtexColorbar('fontSize',26)
+mtexColorMap white2black
+
+% mark reach by a contour line
+hold on
+h=plot(r,e_f,'contour',1/sqrt(2),'linewidth',2,'linecolor','b');
+hold off
 
  %saveFigure('../pic/ps1error8.pdf','crop')
-
-
+ 
+ 
 %% Fig. 2a - The derivative Df
 
 % a fine grid of propagation directions
@@ -161,8 +171,6 @@ cb = mtexColorbar('fontSize',26)
 cb.Ticks = [1e0 1e1 1e2 1e3];
 mtexColorMap white2black 
 
-% circle(rSing,10*degree,'linecolor',0.25*[3 1 1],'linewidth',2)
-
 % saveFigure('../pic/dps1.png','crop')
 
 
@@ -198,8 +206,6 @@ setColorRange([1e-2,1.1])
 
 mtexColorbar('fontSize',26)
 mtexColorMap white2black 
-
-%circle(rSing,10*degree,'linecolor',0.25*[3 1 1],'linewidth',2)
 
 %saveFigure('../pic/dps1Error.png','crop')
 
@@ -286,34 +292,3 @@ mtexColorMap white2black
 
 
 %max(e(ind_Omega)./RHS(ind_Omega))
-
-
-%% Output
-format long
-ind_not_in_reach = find(RHS ==Inf);   % indices where eps>tau
-ii = setdiff(ind_Omega,ind_not_in_reach);
-
-fprintf('bandwidth L:\n')
-disp(L)
-fprintf('error function values:\n')
-disp(max(err_func(ii)))
-fprintf('RMSE function values:\n')
-%disp(norm(err_func(ii))/length(ii))
-disp(sqrt(mean(err_func(ii).^2)))
-fprintf('RHS_max:\n')
-disp(2*max(e_f(ind_Omega)))
-fprintf('RHS_RMSE:\n')
-disp(2*sqrt(mean(e_f(ind_Omega).^2)))
-
-fprintf('error derivative:\n')
-disp(max(e(ii)))
-fprintf('RMSE derivative:\n')
-%disp(norm(e(ii))/length(ii))
-disp(sqrt(mean(e(ii).^2)))
-fprintf('maximal RHS:\n')
-disp(max(RHS(ii)))
-fprintf('RHS_RMSE:\n')
-disp(sqrt(mean(RHS(ii).^2)))
-
-% RMSE error function values
-%norm(err_func(setdiff(ind_Omega,ind_not_in_reach)))/length(setdiff(ind_Omega,ind_not_in_reach))
