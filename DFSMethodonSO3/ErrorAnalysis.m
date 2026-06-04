@@ -26,19 +26,9 @@ bw = [1,2,4,8,16,20,25,32,35:5:60,64,70:5:120,128,130:10:200,225,256];
 maxiter = 100;
 for iter = 1:maxiter
   for N = bw
-    fprintf([num2str(N),' '])
-    for s = [0,1/2,1,3/2]
       
       % harmonic coefficients
-        % fhat = rand(deg2dim(N+1),2)*[2;2i]-1-1i;
         fhat = sqrt(rand(deg2dim(N+1),1)) .* exp(2i*pi*rand(deg2dim(N+1),1));
-        if s ~= 0
-          for n=0:N
-            ind = deg2dim(n)+1:deg2dim(n+1);
-            fhat(ind) = fhat(ind) / norm(fhat(ind)) / (2*n+1)^(s);
-          end
-          fhat = fhat/sqrt(N+1);        
-        end
 
       % (a) Direct WCT
 
@@ -108,7 +98,7 @@ for iter = 1:maxiter
         e_l2 = [norm(fhat-fhatWCT),norm(fhat-fhatFPT),norm(fhat-fhatNFSOFT),norm(fhat-fhatFPTwos)];
         E(end+1,:) = [N,e_l2/norm(fhat,1)];
         save('ErrorWCT','E','columns')
-    end
+        
   end
   progress(iter,maxiter)
 end
