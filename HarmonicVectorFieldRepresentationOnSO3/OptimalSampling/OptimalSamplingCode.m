@@ -31,7 +31,7 @@ oriOpt = {};
 for i = 1:length(M)
   fprintf(['Number of Points: ',num2str(M(i)),'\n'])
   rng(0)
-  oriOpt{i} = odf.discreteSample(M(i),'compact','bandwidth',bw,'maxIter',maxIter,'tol',tol);
+  oriOpt{i} = odf.discreteSample(M(i),'compact','bandwidth',bw,'maxIter',maxIter,'tol',tol,'steepestDescent');
   save('OptimalOri','oriOpt','M','bw')
 end
 
