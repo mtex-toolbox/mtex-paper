@@ -58,29 +58,27 @@ read.
 
 ## Running the scripts
 
-The scripts are cell-mode scripts: they can be run as a whole or section by
-section (`%%` cells), and most sections say which variables of the previous ones
-they need. Run them with their own folder, `weather/` or `synthetic/`, as the
-working directory; all paths are relative to it.
+The scripts are cell-mode scripts. Most sections say on which variables of the 
+previous they depend on. Run them from within their own folder, `weather/` or   
+`synthetic/`, since all paths are relative to the current working directory. 
 
-In `synthetic/`, run `errorVsBandwidth.m` first: it writes the data set and the
-regularization parameters that the two other scripts read.
+In `synthetic/`, run `errorVsBandwidth.m` first. It writes the data set and the
+regularization parameters that the two other scripts depend on. 
 
 Each of the four experiment scripts has a summary section that prints the
 numbers quoted in the text and collects them in a struct `paperNumbers`.
 
 A run overwrites the files in the corresponding `results/` folder; make a copy
-first to keep the ones of the paper. Most of the runtime is spent in LSQR; on
-the machine of the paper:
+first to keep the ones of the paper. Most of the runtime is spent in LSQR. On
+the Ryzen 7 5800X used in the paper, runtimes were approximately as follows: 
 
-- `weatherExample.m`: two to three hours (the iteration study for Figure 2
-  about 40 minutes, the LSQR panels about an hour).
-- `errorVsBandwidth.m`: the timed LSQR runs alone take almost three hours, the
-  search for the error-minimizing regularization parameter at every bandwidth
-  considerably longer.
-- `equalTimeError.m`: about two days, almost all of it in the sweep over the
-  time budgets; the script prints an estimate before the sweep starts.
-- `stepRuntimes.m`: well under an hour.
+- `weatherExample.m`: 2 hours (40 min for the iteration study of Figure 2, and 
+  1 hour for the LSQR panels)
+- `errorVsBandwidth.m`: 3 hours for the LSQR, much longer for the search of the
+  error-minimizing regularization parameter at every bandwidth
+- `equalTimeError.m`: 2 days, almost all of it in the sweep over the time
+  budgets. The script prints an estimate before this sweep starts. 
+- `stepRuntimes.m`: well under 1 hour
 
 ## Reproducibility
 
@@ -90,7 +88,7 @@ The random nodes of the synthetic example are drawn with a fixed seed, and
 rounding.
 
 Runtimes depend on the machine; those of the paper were measured on the machine
-described in Section 3. This affects more than the reported runtimes: the LSQR
+described in Section 3. This affects not only the reported runtimes: the LSQR
 iteration budgets of Figure 1d–g and of Figure 5 are derived from measured
 runtimes, and so are the errors LSQR reaches within them. For the weather
 example, setting `paperCounts = true` in `weatherExample.m` redraws the LSQR
