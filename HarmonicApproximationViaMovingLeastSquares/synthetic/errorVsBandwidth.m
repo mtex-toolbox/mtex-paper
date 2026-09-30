@@ -41,18 +41,6 @@ nD = numel(degrees);
 % options of every LSQR run
 lsqrOpts = {'SobolevIndex',2,'maxit',10000,'tol',1e-6};
 
-% The timings are taken on a fixed set of CPUs (Linux only). '0-15' with 16
-% threads uses all hardware threads of an 8-core CPU with simultaneous
-% multithreading, like the one of Section 3. On a CPU with performance and
-% efficiency cores choose the performance cores. Set pinCores = '' to leave
-% the choice to the operating system.
-pinCores = '0-15';
-nThreads = 16;
-if ~isempty(pinCores) && isunix
-  system(sprintf('taskset -a -pc %s %d > /dev/null 2>&1',pinCores,feature('getpid')));
-  maxNumCompThreads(nThreads);
-end
-
 %% The test function and the nodes
 % The nodes are drawn from a smoothed version of the test function, which
 % |discreteSample| normalizes to a probability density. A fraction of 4
@@ -198,7 +186,7 @@ fcw;
 set(gcf,'position',[10 10 500 500]);
 exportgraphics(gcf,fullfile(outDir,'ToyData.png'),'Resolution',300);
 
-% The colour bar is cut out of this plot in the paper, so the size of the
+% The color bar is cut out of this plot in the paper, so the size of the
 % figure should not be changed.
 figure(3)
 plot(fun,'upper','nolabel');

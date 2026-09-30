@@ -56,19 +56,6 @@ lsqrOpts = {'SobolevIndex',2,'tol',1e-15};
 assert(issorted(timeFactors) && all(timeFactors > 0), ...
   'timeFactors has to be positive and increasing');
 
-% The timings are taken on a fixed set of CPUs (Linux only). '0-15' with 16
-% threads uses all hardware threads of an 8-core CPU with simultaneous
-% multithreading, like the one of Section 3. On a CPU with performance and
-% efficiency cores choose the performance cores, since the cost of an LSQR
-% iteration determines every budget. Set pinCores = '' to leave the choice
-% to the operating system.
-pinCores = '0-15';
-nThreads = 16;
-if ~isempty(pinCores) && isunix
-  system(sprintf('taskset -a -pc %s %d > /dev/null 2>&1',pinCores,feature('getpid')));
-  maxNumCompThreads(nThreads);
-end
-
 %% Import the data set of errorVsBandwidth.m
 
 D = load(fullfile(toyDir,'ToyExampleData.mat'));  % fun, nodes, values
@@ -264,9 +251,9 @@ warning(ws);
 fprintf('\nfinished after %.2f h and %i LSQR runs\n',toc(tSweep)/3600,sum(nSolves(:)));
 
 %% Write the tables
-% The LSQR error jumps between neighbouring bandwidths, because the cost of
+% The LSQR error jumps between neighboring bandwidths, because the cost of
 % an iteration does: on the machine of the paper an iteration is up to twice
-% as expensive for $L \equiv 4 \pmod 8$ as for the neighbouring bandwidths,
+% as expensive for $L \equiv 4 \pmod 8$ as for the neighboring bandwidths,
 % which therefore get fewer iterations out of the same budget. Figure 5 shows
 % the raw columns |LSQR_x<f>| at the odd bandwidths only. The table also
 % contains the upper envelope |LSQR_x<f>_env| through the local maxima. Which
@@ -463,7 +450,7 @@ Em = errorFor(10^m);
 Elo = errorFor(10^lo);
 Ehi = errorFor(10^hi);
 
-% reg0 is the optimum of a neighbouring entry; if the minimum lies outside
+% reg0 is the optimum of a neighboring entry; if the minimum lies outside
 % the bracket, we shift the bracket once
 if Elo < Em && Elo <= Ehi
   hi = m; m = lo; lo = lo - warmDecades; Em = Elo;

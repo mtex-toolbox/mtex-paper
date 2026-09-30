@@ -1,4 +1,4 @@
-# Harmonic Approximation from Scattered Data using Moving Least Squares — experiment code
+# Fast and Stable Harmonic Approximation from Ill-distributed Data using Moving Least Squares — experiment code
 
 R. Hielscher, T. Pöschl, E. Wünsche, TU Bergakademie Freiberg
 
@@ -58,26 +58,27 @@ read.
 
 ## Running the scripts
 
-The scripts are cell-mode scripts. Most sections say on which variables of the 
-previous they depend on. Run them from within their own folder, `weather/` or   
-`synthetic/`, since all paths are relative to the current working directory. 
+The scripts are cell-mode scripts. Run their sections in order, since each
+section uses the variables of the previous ones, and run them from within their
+own folder, `weather/` or `synthetic/`, since all paths are relative to the
+current working directory.
 
 In `synthetic/`, run `errorVsBandwidth.m` first. It writes the data set and the
-regularization parameters that the two other scripts depend on. 
+regularization parameters that the two other scripts depend on.
 
 Each of the four experiment scripts has a summary section that prints the
 numbers quoted in the text and collects them in a struct `paperNumbers`.
 
 A run overwrites the files in the corresponding `results/` folder; make a copy
 first to keep the ones of the paper. Most of the runtime is spent in LSQR. On
-the Ryzen 7 5800X used in the paper, runtimes were approximately as follows: 
+the Ryzen 7 5800X used in the paper, runtimes were approximately as follows:
 
-- `weatherExample.m`: 2 hours (40 min for the iteration study of Figure 2, and 
+- `weatherExample.m`: 2 hours (40 min for the iteration study of Figure 2, and
   1 hour for the LSQR panels)
 - `errorVsBandwidth.m`: 3 hours for the LSQR, much longer for the search of the
   error-minimizing regularization parameter at every bandwidth
 - `equalTimeError.m`: 2 days, almost all of it in the sweep over the time
-  budgets. The script prints an estimate before this sweep starts. 
+  budgets. The script prints an estimate before this sweep starts.
 - `stepRuntimes.m`: well under 1 hour
 
 ## Reproducibility
@@ -85,7 +86,10 @@ the Ryzen 7 5800X used in the paper, runtimes were approximately as follows:
 The random nodes of the synthetic example are drawn with a fixed seed, and
 `stepRuntimes.m` checks that it redraws the data set saved by
 `errorVsBandwidth.m`. The errors of Figure 4 therefore reproduce up to
-rounding.
+rounding. For HAMLS this means agreement to about 13 digits. LSQR, however,
+amplifies rounding over its thousands of iterations, and the rounding depends on
+the number of threads; at the largest bandwidths its errors can therefore differ
+from those of the paper in the second or third digit.
 
 Runtimes depend on the machine; those of the paper were measured on the machine
 described in Section 3. This affects not only the reported runtimes: the LSQR

@@ -12,7 +12,7 @@
 %  HarmMLSApproximationWeatherData.png      - HAMLS approximation (Figure 1c)
 %  LSQRApproximationWeatherData_<f>xT.png   - LSQR within f times the HAMLS
 %                                             runtime (Figure 1d-g)
-%  ColorbarWeather.png                      - colour bar of Figure 1
+%  ColorbarWeather.png                      - color bar of Figure 1
 %  IterationStudy_reg_*.txt                 - data of Figure 2
 %  LSQRPanels.txt                           - runtimes and iteration counts
 %
@@ -55,7 +55,7 @@ nodes.frame = rF;
 coastLines = C.coastLines(:);
 coastLines.frame = rF;
 
-% all plots share this colour range
+% all plots share this color range
 colorRange = [min(values), max(values)];
 
 fprintf('%i stations (%i after merging), %.1f to %.1f degrees Celsius\n', ...
@@ -76,7 +76,7 @@ savePng(fullfile(outDir,'WeatherData.png'),panelSize);
 % about 0.03 seconds here and are included in the runtimes of both methods.
 %
 % The MLS reconstruction uses tangent monomials of degree 4 and the target
-% neighbour count $n = 4 \dim = 60$. The thresholds of the regularization
+% neighbor count $n = 4 \dim = 60$. The thresholds of the regularization
 % (Section 2.3) are fixed instead of calibrated automatically. The warning of
 % |S2FunMLS/eval| that |candidateFactor| should be raised can be ignored.
 
@@ -253,8 +253,8 @@ if paperCounts
   end
 end
 
-%% Colour bar
-% The colour bar is cut out of this plot in the paper, so the size of the
+%% Color bar
+% The color bar is cut out of this plot in the paper, so the size of the
 % figure should not be changed.
 
 figure

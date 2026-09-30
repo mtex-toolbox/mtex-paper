@@ -30,18 +30,6 @@ nB = numel(bw);
 nN = numel(nNodes);
 nD = numel(degrees);
 
-% The timings are taken on a fixed set of CPUs (Linux only). '0-15' with 16
-% threads uses all hardware threads of an 8-core CPU with simultaneous
-% multithreading, like the one of Section 3. On a CPU with performance and
-% efficiency cores choose the performance cores. Set pinCores = '' to leave
-% the choice to the operating system.
-pinCores = '0-15';
-nThreads = 16;
-if ~isempty(pinCores) && isunix
-  system(sprintf('taskset -a -pc %s %d > /dev/null 2>&1',pinCores,feature('getpid')));
-  maxNumCompThreads(nThreads);
-end
-
 %% The test function, the nodes and the MLS approximations
 % The nodes are drawn exactly as in |errorVsBandwidth.m|, with 4 percent of
 % them drawn uniformly. The MLS options coincide with those of
