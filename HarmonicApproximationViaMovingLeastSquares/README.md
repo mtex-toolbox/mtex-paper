@@ -1,4 +1,4 @@
-# Fast and Stable Harmonic Approximation from Ill-distributed Data using Moving Least Squares — experiment code
+# Fast and Stable Harmonic Approximation from Ill-Distributed Data using Moving Least Squares — experiment code
 
 R. Hielscher, T. Pöschl, E. Wünsche, TU Bergakademie Freiberg
 
@@ -47,10 +47,10 @@ Where each item of the paper comes from:
 | Figure 3 | `synthetic/errorVsBandwidth.m` | `errorVsBandwidth/ToyFun.png`, `ToyData.png`, `ColorbarToy.eps` |
 | Figure 4 | `synthetic/errorVsBandwidth.m` | `errorVsBandwidth/ApproximationError.txt` |
 | runtimes in Section 3.2 | `synthetic/errorVsBandwidth.m` | `errorVsBandwidth/ApproximationTime.txt`, `LSQRError.mat` |
-| Table 1 | `synthetic/stepRuntimes.m` | `stepRuntimes/RuntimeMLSQuadrature.txt` |
+| Table 2 | `synthetic/stepRuntimes.m` | `stepRuntimes/RuntimeMLSQuadrature.txt` |
 | Figure 5 | `synthetic/equalTimeError.m` | `equalTime/LSQRErrorTimeFactors.txt` |
 
-Figures 2, 4 and 5 and Table 1 are drawn with pgfplots in the LaTeX source of
+Figures 2, 4 and 5 and Table 2 are drawn with pgfplots in the LaTeX source of
 the paper, directly from these tab-separated tables; the column names are given
 in the first line of each file. The `.mat` files hold the individual
 measurements behind the tables and the intermediate results that later scripts
